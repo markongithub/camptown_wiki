@@ -1,3 +1,4 @@
+import pickle
 import pronouncing
 import urllib
 import re
@@ -7,21 +8,21 @@ from lib.constants import (
     BANNED_PHRASES,
     CHARS_ONLY,
     PRONUNCIATION_OVERRIDES,
-    TMNT_STRESSES,
+    CAMPTOWN_STRESSES,
 )
 from num2words import num2words as n2w
 
 
-def isTMNT(title: str):
-    """Checks if a Wikipedia page title has the same stress pattern as TMNT.
+def isCamptown(title: str):
+    """Checks if a Wikipedia page title has the same stress pattern as Camptown.
 
-    >>> isTMNT('Teenage Mutant Ninja Turtles')
+    >>> isCamptown('Pedro, Marshal of Navarre')
     True
 
-    >>> isTMNT('Single Payer Health Insurance')
-    True
+    >>> isCamptown('Single Payer Health Insurance')
+    False
 
-    >>> isTMNT('Romeo, Romeo, wherefore art thou, Romeo?')
+    >>> isCamptown('Romeo, Romeo, wherefore art thou, Romeo?')
     False
     """
     if containsBanned(title):
@@ -29,11 +30,10 @@ def isTMNT(title: str):
 
     title = cleanStr(title)
     title_stresses = getTitleStresses(title)
-
-    if (not title_stresses) or (len(title_stresses) != 8):
+    if (not title_stresses) or (len(title_stresses) != 7):
         return False
 
-    return True if TMNT_STRESSES.match(title_stresses) else False
+    return True if CAMPTOWN_STRESSES.match(title_stresses) else False
 
 
 def containsBanned(title: str):
@@ -58,6 +58,18 @@ def containsBanned(title: str):
 
     return _containsBannedWord(title) or _containsBannedPhrase(title)
 
+def getRhymingPartIfCamptown(title: str):
+    if not isCamptown(title):
+        return None
+    print(f'{title}...')
+    title_words = title.split()
+    last_word = title_words[-1]
+    # This should never fail if isCamptown is true.
+    phones = pronouncing.phones_for_word(last_word)
+    print (f'phones for {last_word}: {phones}')
+    if not phones:
+        return None
+    return pronouncing.rhyming_part(phones[0])
 
 def getTitleStresses(title: str):
     """Takes a wikipedia title and gets the combined stresses of all words.
