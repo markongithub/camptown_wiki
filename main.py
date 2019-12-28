@@ -7,7 +7,7 @@ import wikipedia
 
 from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
 # from lib import mastodon
-# from lib import twitter
+from lib import twitter
 from lib import words
 
 STORED_RHYMES = './rhymes.json'
@@ -16,11 +16,11 @@ def main():
     (title1, title2) = searchForCamptown(MAX_ATTEMPTS, BACKOFF)
     status_text = "\n".join((title1, "Doo dah, doo dah", title2, "Oh, doo dah day"))
 
-    if len(status_text) > MAX_STATUS_LEN:
-        status_text = title1
-
-    print(status_text)
-
+    if len(status_text) <= MAX_STATUS_LEN:
+        _ = twitter.sendTweet(status_text)
+        print(status_text)
+    else:
+        print(f'Oh no, this was too long: {status_text}')
 
 def read_or_new_json(path, default):
     if os.path.isfile(path):

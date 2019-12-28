@@ -10,15 +10,17 @@ TIMEOUT_BACKOFF = 240
 LOGO_PATH = r'/tmp/logo.png'
 SCREENSHOT_PATH = r'/tmp/screenshot.png'
 CHROME_PATH = r'google-chrome'
-KEY_PATH = r'/home/catherine_lee_ball/.keys'
+KEY_PATH = r'./twitter_creds.txt'
 URL = 'file:///home/catherine_lee_ball/tmnt.html'
 # Article titles the contain strings in BANNED_WORDS are skipped.
 # Banned words are things that are very inappropriate, or things
 # that are oversaturating the timeline, i.e. historic districts
 BANNED_WORDS = ("rape", "nazi", "victim", "shootings")
-BANNED_PHRASES = (r"(", "shooting", "railway station", "rugby union", "historic district", "murder of", "killing of", "lynching of")
+BANNED_PHRASES = (r"(", "shooting", "murder of", "killing of", "lynching of")
+# Survey can go either way but I'm wagering that in article titles it will more
+# often be a noun.
 PRONUNCIATION_OVERRIDES = (("HD", "10"), ("U.S.", "10"), ("Laos", "1"),
-                           ("Our", "1"))
+                           ("Our", "1"), ("DeMille", "01"), ("Survey", "10"))
 TMNT_STRESSES = re.compile(r"1[02]1[02]1[02]1[02]")
 CAMPTOWN_STRESSES = re.compile(r"1[02]1[02]1[02]1")
 CHARS_ONLY = re.compile("[^a-zA-Z]")
