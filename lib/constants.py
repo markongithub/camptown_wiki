@@ -10,7 +10,6 @@ TIMEOUT_BACKOFF = 240
 LOGO_PATH = r'/tmp/logo.png'
 SCREENSHOT_PATH = r'/tmp/screenshot.png'
 CHROME_PATH = r'google-chrome'
-KEY_PATH = r'./twitter_creds.txt'
 URL = 'file:///home/catherine_lee_ball/tmnt.html'
 # Article titles the contain strings in BANNED_WORDS are skipped.
 # Banned words are things that are very inappropriate, or things

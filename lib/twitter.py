@@ -2,7 +2,6 @@ import sys
 import tweepy
 
 from collections import namedtuple
-from lib.constants import KEY_PATH
 
 TwitterAuth = namedtuple(
     "TWITTER",
@@ -10,23 +9,13 @@ TwitterAuth = namedtuple(
 )
 
 
-def getTwitterCredentials(keyfile=KEY_PATH):
-    # TOODO: Use better config file format, better parsing logic
-    try:
-        with open(keyfile, "r") as f:
-            keys = f.read()
-    except Exception as e:
-        sys.stderr.write(f"Exception fetching Twitter keys: {e}")
-        sys.exit(1)
-
-    keys = keys.split()
-    keys = [key.strip() for key in keys]
+def getTwitterCredentials():
 
     return TwitterAuth(
-        consumer_key=keys[0],
-        consumer_secret=keys[1],
-        access_token=keys[2],
-        access_token_secret=keys[3],
+        consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
+        consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
+        access_token=os.environ['TWITTER_ACCESS_TOKEN'],
+        access_token_secret=['TWITTER_ACCESS_TOKEN_SECRET'],
     )
 
 
