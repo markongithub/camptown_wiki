@@ -33,6 +33,9 @@ def read_or_new_json(path, default):
         json.dump(default, f)
     return default
 
+def sameFinalWord(title1, title2):
+    return old_title.lower().split()[-1] == title.lower().split()[-1]
+
 def searchForCamptown(attempts=MAX_ATTEMPTS, backoff=BACKOFF):
     """Loop MAX_ATTEMPT times, searching for a Camptown meter wikipedia title.
 
@@ -49,12 +52,13 @@ def searchForCamptown(attempts=MAX_ATTEMPTS, backoff=BACKOFF):
         sys.stdout.flush()
         rhymes = checkTenPagesForCamptown()
         for (rhyme, title) in rhymes:
-            old_title = rhyming_dict.pop(rhyme, None)
+            old_title = rhyming_dict.get(rhyme, None)
             if old_title:
-                if old_title.split()[-1] == title.split()[-1]:
+                if sameFinalWord(old_title, title):
                     print(f"{old_title} and {title} are not a good rhyme so I will just throw {title} away for now.")
                     continue
                 print(f"\nMatched: {title} and {old_title}")
+                del rhyming_dict[rhyme]
                 json.dump(rhyming_dict, open(STORED_RHYMES, 'w'))
                 return (old_title, title)
             else:
