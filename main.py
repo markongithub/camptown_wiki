@@ -13,6 +13,7 @@ from lib import words
 STORED_RHYMES = './rhymes.json'
 
 def main():
+    _ = twitter.getTwitterCredentials()
     (title1, title2) = searchForCamptown(MAX_ATTEMPTS, BACKOFF)
     status_text = "\n".join((title1, "Doo dah, doo dah", title2, "Oh, doo dah day"))
 
@@ -34,7 +35,7 @@ def read_or_new_json(path, default):
     return default
 
 def sameFinalWord(title1, title2):
-    return old_title.lower().split()[-1] == title.lower().split()[-1]
+    return title1.lower().split()[-1] == title2.lower().split()[-1]
 
 def searchForCamptown(attempts=MAX_ATTEMPTS, backoff=BACKOFF):
     """Loop MAX_ATTEMPT times, searching for a Camptown meter wikipedia title.
