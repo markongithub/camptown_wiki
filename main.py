@@ -6,6 +6,7 @@ import time
 import wikipedia
 
 from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
+from lib import datastore
 # from lib import mastodon
 from lib import twitter
 from lib import words
@@ -13,8 +14,13 @@ from lib import words
 STORED_RHYMES = './rhymes.json'
 
 def main():
-    _ = twitter.getTwitterCredentials()
-    (title1, title2) = searchForCamptown(MAX_ATTEMPTS, BACKOFF)
+    rhyming_dict = datastore.load_local(STORED_RHYMES)
+    (new_rhyming_dict, title1, title2) = searchForCamptown(rhyming_dict, MAX_ATTEMPTS, BACKOFF)
+    datastore.dump_local(STORED_RHYMES, new_rhyming_dict)
+    if title1 and title2:
+        postTweet(title1, title2)
+
+def postTweet(title1, title2):
     status_text = "\n".join((title1, "Doo dah, doo dah", title2, "Oh, doo dah day"))
 
     if len(status_text) <= MAX_STATUS_LEN:
@@ -37,7 +43,7 @@ def read_or_new_json(path, default):
 def sameFinalWord(title1, title2):
     return title1.lower().split()[-1] == title2.lower().split()[-1]
 
-def searchForCamptown(attempts=MAX_ATTEMPTS, backoff=BACKOFF):
+def searchForCamptown(rhyming_dict, attempts=MAX_ATTEMPTS, backoff=BACKOFF):
     """Loop MAX_ATTEMPT times, searching for a Camptown meter wikipedia title.
 
     Args:
@@ -47,7 +53,6 @@ def searchForCamptown(attempts=MAX_ATTEMPTS, backoff=BACKOFF):
         String or False: String of wikipedia title in Camptown meter, or False if
                          none found.
     """
-    rhyming_dict = read_or_new_json(STORED_RHYMES, {})
     for attempt in range(attempts):
         print(f"\r{str(attempt * 10)} articles fetched...", end="")
         sys.stdout.flush()
@@ -60,8 +65,7 @@ def searchForCamptown(attempts=MAX_ATTEMPTS, backoff=BACKOFF):
                     continue
                 print(f"\nMatched: {title} and {old_title}")
                 del rhyming_dict[rhyme]
-                json.dump(rhyming_dict, open(STORED_RHYMES, 'w'))
-                return (old_title, title)
+                return (rhyming_dict, old_title, title)
             else:
                 print(f"\nAdding {title}, which rhymes with {rhyme}")
                 rhyming_dict[rhyme] = title
@@ -69,8 +73,7 @@ def searchForCamptown(attempts=MAX_ATTEMPTS, backoff=BACKOFF):
         time.sleep(backoff)
 
     print(f"\nNo matches found.")
-    json.dump(rhyming_dict, open(STORED_RHYMES, 'w'))
-    sys.exit(1)
+    return (rhyming_dict, None, None)
 
 
 def checkTenPagesForCamptown():
@@ -82,7 +85,7 @@ def checkTenPagesForCamptown():
     Args:
         None
     Returns:
-        String or False: The Camptown compliant title, or False if none found.
+        List of (String,String) pairs
     """
     wikipedia.set_rate_limiting(True)
     try:
