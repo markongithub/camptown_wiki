@@ -13,7 +13,7 @@ from lib import words
 
 STORED_RHYMES = './rhymes.json'
 
-def main():
+def cli_main():
     rhyming_dict = datastore.load_local(STORED_RHYMES)
     (new_rhyming_dict, title1, title2) = searchForCamptown(rhyming_dict, MAX_ATTEMPTS, BACKOFF)
     datastore.dump_local(STORED_RHYMES, new_rhyming_dict)
@@ -110,4 +110,4 @@ def checkTenPagesForCamptown():
 
 
 if __name__ == "__main__":
-    main()
+    cli_main()

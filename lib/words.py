@@ -2,6 +2,7 @@ import pickle
 import pronouncing
 import urllib
 import re
+import string
 
 from lib.constants import (
     BANNED_WORDS,
@@ -58,11 +59,13 @@ def containsBanned(title: str):
 
     return _containsBannedWord(title) or _containsBannedPhrase(title)
 
+def splitWords(s: str):
+    return title.translate(str.maketrans('', '', string.punctuation)).split()
 def getRhymingPartIfCamptown(title: str):
     if not isCamptown(title):
         return None
     print(f'{title}...')
-    title_words = title.split()
+    title_words = splitWords(title)
     last_word = title_words[-1]
     # This should never fail if isCamptown is true.
     phones = pronouncing.phones_for_word(last_word)
@@ -82,7 +85,7 @@ def getTitleStresses(title: str):
     Returns:
         String, stresses of each syllable as 0, 1, and 2s.
     """
-    title_words = title.split()
+    title_words = splitWords(title)
     title_stresses = ""
     while title_words:
         if len(title_stresses) > 8:
