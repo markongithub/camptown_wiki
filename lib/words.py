@@ -60,7 +60,7 @@ def containsBanned(title: str):
     return _containsBannedWord(title) or _containsBannedPhrase(title)
 
 def splitWords(s: str):
-    return title.translate(str.maketrans('', '', string.punctuation)).split()
+    return s.translate(str.maketrans('', '', string.punctuation)).split()
 def getRhymingPartIfCamptown(title: str):
     if not isCamptown(title):
         return None
