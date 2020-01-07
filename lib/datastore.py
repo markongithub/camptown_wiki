@@ -21,3 +21,10 @@ class LocalDatastore:
     def dump(self, data):
         with open(self.path, 'w') as f:
             json.dump(data, f)
+
+class NullDatastore:
+    def load(self):
+        return {}
+
+    def dump(self, data):
+        pass

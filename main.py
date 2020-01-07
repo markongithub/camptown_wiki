@@ -11,10 +11,11 @@ from lib import datastore
 from lib import twitter
 from lib import words
 
-STORED_RHYMES = './rhymes.json'
-
 def cli_main():
-    storage = datastore.LocalDatastore(STORED_RHYMES)
+    if os.environ.get('LOCAL_DATASTORE'):
+        storage = datastore.LocalDatastore(os.environ.get('LOCAL_DATASTORE'))
+    else:
+        storage = datastore.NullDatastore()
     rhyming_dict = storage.load()
     (new_rhyming_dict, title1, title2) = searchForCamptown(rhyming_dict, MAX_ATTEMPTS, BACKOFF)
     storage.dump(new_rhyming_dict)
