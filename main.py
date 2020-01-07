@@ -14,9 +14,10 @@ from lib import words
 STORED_RHYMES = './rhymes.json'
 
 def cli_main():
-    rhyming_dict = datastore.load_local(STORED_RHYMES)
+    storage = datastore.LocalDatastore(STORED_RHYMES)
+    rhyming_dict = storage.load()
     (new_rhyming_dict, title1, title2) = searchForCamptown(rhyming_dict, MAX_ATTEMPTS, BACKOFF)
-    datastore.dump_local(STORED_RHYMES, new_rhyming_dict)
+    storage.dump(new_rhyming_dict)
     if title1 and title2:
         postTweet(title1, title2)
 
