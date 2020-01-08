@@ -1,9 +1,13 @@
+import os
 import re
 
 # Constants for use throughout the application.
 # Someday maybe I'll use configs or CLI args. For now this is easier.
 
-MAX_ATTEMPTS = 500
+if os.environ.get('MAX_ATTEMPTS'):
+    MAX_ATTEMPTS=int(os.environ.get('MAX_ATTEMPTS'))
+else:
+    MAX_ATTEMPTS = 1
 MAX_STATUS_LEN = 280
 BACKOFF = 0.5
 TIMEOUT_BACKOFF = 240
