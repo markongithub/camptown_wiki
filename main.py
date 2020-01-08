@@ -25,6 +25,9 @@ def cli_main():
     if title1 and title2:
         postTweet(title1, title2)
 
+def lambda_handler(event, context):
+    return cli_main()
+
 def postTweet(title1, title2):
     status_text = "\n".join((title1, "Doo dah, doo dah", title2, "Oh, doo dah day"))
 
