@@ -14,6 +14,9 @@ from lib import words
 def cli_main():
     if os.environ.get('LOCAL_DATASTORE'):
         storage = datastore.LocalDatastore(os.environ.get('LOCAL_DATASTORE'))
+    elif os.environ.get('S3_BUCKET'):
+        storage = datastore.S3Datastore(
+                os.environ['S3_BUCKET'], os.environ['S3_KEY'])
     else:
         storage = datastore.NullDatastore()
     rhyming_dict = storage.load()

@@ -1,6 +1,8 @@
 import json
 import os
 
+import boto3
+
 class LocalDatastore:
     def __init__(self, path):
         self.path = path
