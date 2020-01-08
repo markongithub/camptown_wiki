@@ -62,8 +62,6 @@ def searchForCamptown(rhyming_dict, attempts=MAX_ATTEMPTS, backoff=BACKOFF):
                          none found.
     """
     for attempt in range(attempts):
-        print(f"\r{str(attempt * 10)} articles fetched...", end="")
-        sys.stdout.flush()
         rhymes = checkTenPagesForCamptown()
         for (rhyme, title) in rhymes:
             old_title = rhyming_dict.get(rhyme, None)
