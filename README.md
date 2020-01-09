@@ -1,61 +1,32 @@
 ## TMNT Wikipedia Bot
 
-Every 60 minutes this Python script posts to https://twitter.com/wiki_tmnt and https://botsin.space/@tmnt
+Every 60 minutes this Python script posts to https://twitter.com/CamptownWiki
 
 ### Why
 
-For fun! Inspired by https://xkcd.com/1412/
+For fun! Inspired by https://twitter.com/wiki_tmnt
 
 ### How
 
 When it runs, it:
 - Pulls 10 random Wikipedia article titles
-- Checks if they are in trochaic tetrameter
+- Checks if they are in the correct meter
+- Looks to see if another stored title rhymes with it
   - If not, pull 10 more articles ad infinitum until a match is found
-- Create a faux-TMNT logo containing the wiki title
-  - I'm using the logic at http://glench.com/tmnt to do this
-- Post the title and generated logo to @wiki_tmnt on Twitter
+- Post the verse to @CamptownWiki on Twitter
 
 ### Environment
 
-This script requires the following:
-
-- Python >= 3.7
-  - Earlier may work, only tested on 3.7
-- Chrome >= 57
-- Via PyPi:
-  - pronouncing
-  - num2words
-  - PIL
-
-For @wiki_tmnt it runs on a cron job on my local machine.
+For @CamptownWiki it runs in AWS Lambda with an S3 bucket for storage (should probably be DynamoDB).
 
 ### Configuration
 
-I haven't defined a config file format yet, it's in the TODO list below. Common config knobs are currently mostly in `lib/constants.py`.
-
-### Caveats
-
-I'm not developing this for anyone but myself, so you may see some anti-patterns like hardcoded paths specific to my environment, and general lack of configurability outside editing the source.
-
-Given this runs once per hour, I'm not very concerned about performance. I often choose slow, but readable and easy-to-implement solutions.
+Mostly in `lib/constants.py`, some is environment variables because Lambda likes those.
 
 ### TODO
 
 TODO:
-  - More docstrings
-  - README
-  - CLI arguments
-  - use real file format for keys
-  - refactor key fetching to be done once
-  - Integration tests
-  - more unit tests
-  - actually enable option to run doctests
-  - Run glench.com/tmnt locally
-
-Super bonus points:
+  - Merge the code with wiki_tmnt
+  - DynamoDB
+  - Save all the titles we've used before to prevent reruns
   - CI
-  - Mastodon
-  - zipapp release
-  - archive posts locally
-  - cache of titles : stresses
