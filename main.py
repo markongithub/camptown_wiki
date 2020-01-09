@@ -2,13 +2,13 @@
 import os
 import sys
 import time
-import wikipedia
 
-from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
 from lib import datastore
+from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
 from lib import twitter
 from lib import words
 
+import wikipedia
 
 def main():
     if os.environ.get('LOCAL_DATASTORE'):

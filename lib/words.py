@@ -1,15 +1,16 @@
-import pronouncing
-import urllib
 import string
+import urllib
+
+from num2words import num2words as n2w
+import pronouncing
 
 from lib.constants import (
-    BANNED_WORDS,
     BANNED_PHRASES,
+    BANNED_WORDS,
+    CAMPTOWN_STRESSES,
     CHARS_ONLY,
     PRONUNCIATION_OVERRIDES,
-    CAMPTOWN_STRESSES,
 )
-from num2words import num2words as n2w
 
 
 def isCamptown(title: str):
