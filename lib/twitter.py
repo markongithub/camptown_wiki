@@ -1,5 +1,5 @@
-import os
 from collections import namedtuple
+import os
 
 import tweepy
 

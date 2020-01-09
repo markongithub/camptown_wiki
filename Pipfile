@@ -12,6 +12,7 @@ num2words = "*"
 tweepy = "*"
 boto3 = "*"
 flake8 = "*"
+flake8-import-order = "*"
 
 [requires]
 python_version = "3.7"

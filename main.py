@@ -5,9 +5,8 @@ import time
 
 from lib import datastore
 from lib import twitter
-from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
 from lib import words
-
+from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
 import wikipedia
 
 
