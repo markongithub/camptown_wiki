@@ -1,8 +1,8 @@
+from collections import namedtuple
 import os
-import sys
+
 import tweepy
 
-from collections import namedtuple
 
 TwitterAuth = namedtuple(
     "TWITTER",

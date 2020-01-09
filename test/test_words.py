@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from lib import words
 
+
 class TestJoke(TestCase):
     def test_isCamptown(self):
         self.assertTrue(words.isCamptown('Pedro, Marshal of Navarre'))
@@ -16,4 +17,3 @@ class TestJoke(TestCase):
         self.assertEqual(
                 None,
                 words.getRhymingPartIfCamptown('Single Payer Health Insurance'))
-

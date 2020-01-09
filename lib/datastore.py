@@ -3,6 +3,7 @@ import os
 
 import boto3
 
+
 class LocalDatastore:
     def __init__(self, path):
         self.path = path
@@ -14,7 +15,7 @@ class LocalDatastore:
             with open(self.path, 'r') as f:
                 try:
                     data = json.load(f)
-                except Exception: # so many things could go wrong, can't be more specific.
+                except Exception:  # so many things could go wrong, can't be more specific.
                     pass
             return data
         else:
@@ -24,12 +25,14 @@ class LocalDatastore:
         with open(self.path, 'w') as f:
             json.dump(data, f)
 
+
 class NullDatastore:
     def load(self):
         return {}
 
     def dump(self, data):
         pass
+
 
 class S3Datastore:
     def __init__(self, bucket, key):

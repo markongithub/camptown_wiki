@@ -1,17 +1,15 @@
-import pickle
-import pronouncing
-import urllib
-import re
 import string
+import urllib
 
 from lib.constants import (
-    BANNED_WORDS,
     BANNED_PHRASES,
+    BANNED_WORDS,
+    CAMPTOWN_STRESSES,
     CHARS_ONLY,
     PRONUNCIATION_OVERRIDES,
-    CAMPTOWN_STRESSES,
 )
 from num2words import num2words as n2w
+import pronouncing
 
 
 def isCamptown(title: str):
@@ -59,8 +57,10 @@ def containsBanned(title: str):
 
     return _containsBannedWord(title) or _containsBannedPhrase(title)
 
+
 def splitWords(s: str):
     return s.translate(str.maketrans('', '', string.punctuation)).split()
+
 
 def getRhymingPartIfCamptown(title: str):
     if not isCamptown(title):
@@ -70,10 +70,11 @@ def getRhymingPartIfCamptown(title: str):
     last_word = title_words[-1]
     # This should never fail if isCamptown is true.
     phones = pronouncing.phones_for_word(last_word)
-    print (f'phones for {last_word}: {phones}')
+    print(f'phones for {last_word}: {phones}')
     if not phones:
         return None
     return pronouncing.rhyming_part(phones[0])
+
 
 def getTitleStresses(title: str):
     """Takes a wikipedia title and gets the combined stresses of all words.
