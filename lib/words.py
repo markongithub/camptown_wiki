@@ -2,7 +2,6 @@ import string
 import urllib
 
 from num2words import num2words as n2w
-import pronouncing
 
 from lib.constants import (
     BANNED_PHRASES,
@@ -12,6 +11,7 @@ from lib.constants import (
     PRONUNCIATION_OVERRIDES,
 )
 
+import pronouncing
 
 def isCamptown(title: str):
     """Checks if a Wikipedia page title has the same stress pattern as Camptown.
