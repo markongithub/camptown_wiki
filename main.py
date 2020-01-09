@@ -11,7 +11,7 @@ from lib import datastore
 from lib import twitter
 from lib import words
 
-def cli_main():
+def main():
     if os.environ.get('LOCAL_DATASTORE'):
         storage = datastore.LocalDatastore(os.environ.get('LOCAL_DATASTORE'))
     elif os.environ.get('S3_BUCKET'):
@@ -26,7 +26,7 @@ def cli_main():
         postTweet(title1, title2)
 
 def lambda_handler(event, context):
-    return cli_main()
+    return main()
 
 def postTweet(title1, title2):
     status_text = "\n".join((title1, "Doo dah, doo dah", title2, "Oh, doo dah day"))
@@ -116,4 +116,4 @@ def checkTenPagesForCamptown():
 
 
 if __name__ == "__main__":
-    cli_main()
+    main()
