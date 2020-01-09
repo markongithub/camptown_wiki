@@ -11,6 +11,7 @@ pronouncing = "*"
 num2words = "*"
 tweepy = "*"
 boto3 = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.7"

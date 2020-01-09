@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import json
 import os
 import sys
 import time
@@ -7,9 +6,9 @@ import wikipedia
 
 from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
 from lib import datastore
-# from lib import mastodon
 from lib import twitter
 from lib import words
+
 
 def main():
     if os.environ.get('LOCAL_DATASTORE'):
@@ -25,8 +24,10 @@ def main():
     if title1 and title2:
         postTweet(title1, title2)
 
+
 def lambda_handler(event, context):
     return main()
+
 
 def postTweet(title1, title2):
     status_text = "\n".join((title1, "Doo dah, doo dah", title2, "Oh, doo dah day"))
@@ -37,19 +38,10 @@ def postTweet(title1, title2):
     else:
         print(f'Oh no, this was too long: {status_text}')
 
-def read_or_new_json(path, default):
-    if os.path.isfile(path):
-        with open(path, "r") as f:
-            try:
-                return json.load(f)
-            except Exception: # so many things could go wrong, can't be more specific.
-                pass 
-    with open(path, "w") as f:
-        json.dump(default, f)
-    return default
 
 def sameFinalWord(title1, title2):
     return title1.lower().split()[-1] == title2.lower().split()[-1]
+
 
 def searchForCamptown(rhyming_dict, attempts=MAX_ATTEMPTS, backoff=BACKOFF):
     """Loop MAX_ATTEMPT times, searching for a Camptown meter wikipedia title.

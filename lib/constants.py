@@ -5,7 +5,7 @@ import re
 # Someday maybe I'll use configs or CLI args. For now this is easier.
 
 if os.environ.get('MAX_ATTEMPTS'):
-    MAX_ATTEMPTS=int(os.environ.get('MAX_ATTEMPTS'))
+    MAX_ATTEMPTS = int(os.environ.get('MAX_ATTEMPTS'))
 else:
     MAX_ATTEMPTS = 1
 MAX_STATUS_LEN = 280
