@@ -69,7 +69,7 @@ def getRhymingPartIfCamptown(title: str):
     title_words = splitWords(title)
     last_word = title_words[-1]
     # This should never fail if isCamptown is true.
-    phones = pronouncing.phones_for_word(last_word)
+    phones = pronouncing.phones_for_word(numbersToWords(last_word))
     print(f'phones for {last_word}: {phones}')
     if not phones:
         return None
