@@ -4,7 +4,7 @@ import sys
 import time
 
 from lib import datastore
-from lib import twitter
+from lib import blue_sky
 from lib import words
 from lib.constants import BACKOFF, MAX_ATTEMPTS, MAX_STATUS_LEN, TIMEOUT_BACKOFF
 import wikipedia
@@ -30,11 +30,11 @@ def lambda_handler(event, context):
     return main()
 
 
-def postTweet(title1, title2):
+def postSkeet(title1, title2):
     status_text = "\n".join((title1, "Doo dah, doo dah", title2, "Oh, doo dah day"))
 
     if len(status_text) <= MAX_STATUS_LEN:
-        _ = twitter.sendTweet(status_text)
+        _ = blue_sky.sendOneSkeet(status_text)
         print(status_text)
     else:
         print(f"Oh no, this was too long: {status_text}")

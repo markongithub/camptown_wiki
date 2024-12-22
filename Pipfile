@@ -13,6 +13,7 @@ tweepy = "*"
 boto3 = "*"
 flake8 = "*"
 flake8-import-order = "*"
+atproto = "*"
 
 [requires]
 python_version = "3.7"
