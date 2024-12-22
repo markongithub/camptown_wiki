@@ -11,15 +11,16 @@ import wikipedia
 
 
 def main():
-    if os.environ.get('LOCAL_DATASTORE'):
-        storage = datastore.LocalDatastore(os.environ.get('LOCAL_DATASTORE'))
-    elif os.environ.get('S3_BUCKET'):
-        storage = datastore.S3Datastore(
-                os.environ['S3_BUCKET'], os.environ['S3_KEY'])
+    if os.environ.get("LOCAL_DATASTORE"):
+        storage = datastore.LocalDatastore(os.environ.get("LOCAL_DATASTORE"))
+    elif os.environ.get("S3_BUCKET"):
+        storage = datastore.S3Datastore(os.environ["S3_BUCKET"], os.environ["S3_KEY"])
     else:
         storage = datastore.NullDatastore()
     rhyming_dict = storage.load()
-    (new_rhyming_dict, title1, title2) = searchForCamptown(rhyming_dict, MAX_ATTEMPTS, BACKOFF)
+    (new_rhyming_dict, title1, title2) = searchForCamptown(
+        rhyming_dict, MAX_ATTEMPTS, BACKOFF
+    )
     storage.dump(new_rhyming_dict)
     if title1 and title2:
         postTweet(title1, title2)
@@ -36,7 +37,7 @@ def postTweet(title1, title2):
         _ = twitter.sendTweet(status_text)
         print(status_text)
     else:
-        print(f'Oh no, this was too long: {status_text}')
+        print(f"Oh no, this was too long: {status_text}")
 
 
 def sameFinalWord(title1, title2):
@@ -55,11 +56,13 @@ def searchForCamptown(rhyming_dict, attempts=MAX_ATTEMPTS, backoff=BACKOFF):
     """
     for attempt in range(attempts):
         rhymes = checkTenPagesForCamptown()
-        for (rhyme, title) in rhymes:
+        for rhyme, title in rhymes:
             old_title = rhyming_dict.get(rhyme, None)
             if old_title:
                 if sameFinalWord(old_title, title):
-                    print(f"{old_title} and {title} are not a good rhyme so I will just throw {title} away for now.")
+                    print(
+                        f"{old_title} and {title} are not a good rhyme so I will just throw {title} away for now."
+                    )
                     continue
                 print(f"\nMatched: {title} and {old_title}")
                 del rhyming_dict[rhyme]
