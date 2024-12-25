@@ -23,7 +23,7 @@ def main():
     )
     storage.dump(new_rhyming_dict)
     if title1 and title2:
-        postTweet(title1, title2)
+        postSkeet(title1, title2)
 
 
 def lambda_handler(event, context):
