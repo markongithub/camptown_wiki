@@ -23,7 +23,8 @@ BANNED_PHRASES = (r"(", "shooting", "murder of", "killing of", "lynching of")
 # Survey can go either way but I'm wagering that in article titles it will more
 # often be a noun.
 PRONUNCIATION_OVERRIDES = (("HD", "10"), ("U.S.", "10"), ("Laos", "1"),
-                           ("Our", "1"), ("DeMille", "01"), ("Survey", "10"))
+                           ("Our", "1"), ("DeMille", "01"), ("Survey", "10"),
+                           ("Abreu", "010"))
 TMNT_STRESSES = re.compile(r"1[02]1[02]1[02]1[02]")
 CAMPTOWN_STRESSES = re.compile(r"1[02]1[02]1[02]1")
 CHARS_ONLY = re.compile("[^a-zA-Z]")
