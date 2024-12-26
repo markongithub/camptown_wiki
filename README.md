@@ -1,6 +1,6 @@
-## TMNT Wikipedia Bot
+## Camptown Races Wikipedia Bot
 
-Every 60 minutes this Python script posts to https://twitter.com/CamptownWiki
+Every 60 minutes this Python script posts to https://bsky.app/profile/camptownwiki.bsky.social
 
 ### Why
 
@@ -13,7 +13,7 @@ When it runs, it:
 - Checks if they are in the correct meter
 - Looks to see if another stored title rhymes with it
   - If not, pull 10 more articles ad infinitum until a match is found
-- Post the verse to @CamptownWiki on Twitter
+- Post the verse to @camptownwiki.bsky.social on Blue Sky
 
 ### Environment
 
