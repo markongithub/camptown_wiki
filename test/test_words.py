@@ -9,6 +9,7 @@ class TestJoke(TestCase):
         self.assertTrue(words.isCamptown('Savage 2: A Tortured Soul'))
         self.assertFalse(words.isCamptown('Single Payer Health Insurance'))
         self.assertFalse(words.isCamptown('Our Lady\'s Grammar School'))
+        self.assertFalse(words.isCamptown('City & Guilds Mnemonic Code'))
 
     def test_getRhymingPart(self):
         self.assertEqual(

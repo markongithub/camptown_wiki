@@ -167,7 +167,7 @@ def cleanStr(s: str):
         String without offending characters
     """
     DEL_CHARS = ["(", ")", "[", "]", "{", "}", ",", ":", ";", "."]
-    SWAP_CHARS = [("-", " ")]
+    SWAP_CHARS = [("-", " "), ("&", " and ")]
 
     for char in DEL_CHARS:
         s = s.replace(char, "")
