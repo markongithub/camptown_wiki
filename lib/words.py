@@ -6,6 +6,7 @@ from lib.constants import (
     BANNED_WORDS,
     CAMPTOWN_STRESSES,
     CHARS_ONLY,
+    DICTIONARY_OVERRIDES,
     PRONUNCIATION_OVERRIDES,
 )
 from num2words import num2words as n2w
@@ -29,6 +30,7 @@ def isCamptown(title: str):
 
     title = cleanStr(title)
     title_stresses = getTitleStresses(title)
+    # print(f"Stresses for {title}: {title_stresses}")
     if (not title_stresses) or (len(title_stresses) != 7):
         return False
 
@@ -59,7 +61,9 @@ def containsBanned(title: str):
 
 
 def splitWords(s: str):
-    return s.translate(str.maketrans('', '', string.punctuation)).split()
+    # cmudict has apostrophes in words, so we should allow those.
+    my_punctuation = string.punctuation.replace("'", "")
+    return s.translate(str.maketrans('', '', my_punctuation)).split()
 
 
 def getRhymingPartIfCamptown(title: str):
@@ -69,7 +73,7 @@ def getRhymingPartIfCamptown(title: str):
     title_words = splitWords(title)
     last_word = title_words[-1]
     # This should never fail if isCamptown is true.
-    phones = pronouncing.phones_for_word(numbersToWords(last_word))
+    phones = phonesForWord(numbersToWords(last_word))
     print(f'phones for {last_word}: {phones}')
     if not phones:
         return None
@@ -94,6 +98,7 @@ def getTitleStresses(title: str):
             return None
         word = title_words.pop(0)
         word_stresses = getWordStresses(word)
+        # print(f"Stresses for {word}: {word_stresses}")
         # If word was a long number, it may have been parsed into several words.
         if isinstance(word_stresses, list):
             title_words = word_stresses + title_words
@@ -113,13 +118,20 @@ def getWordStresses(word: str):
             return stresses
 
     try:
-        phones = pronouncing.phones_for_word(word)
+        phones = phonesForWord(word)
         stresses = pronouncing.stresses(phones[0])
     except IndexError:
         # Hacky way of discarding candidate title
         return "1111111111"
     return stresses
 
+
+def phonesForWord(word):
+    override_phones = DICTIONARY_OVERRIDES.get(word.lower())
+    if override_phones:
+        return override_phones
+    else:
+        return pronouncing.phones_for_word(word)
 
 def numbersToWords(word):
     ordinal_number_endings = ("nd", "rd", "st", "th")

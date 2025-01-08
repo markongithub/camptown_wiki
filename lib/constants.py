@@ -20,11 +20,13 @@ URL = 'file:///home/catherine_lee_ball/tmnt.html'
 # that are oversaturating the timeline, i.e. historic districts
 BANNED_WORDS = ("rape", "nazi", "victim", "shootings")
 BANNED_PHRASES = (r"(", "shooting", "murder of", "killing of", "lynching of")
+# These keys must ALWAYS be lowercase.
+DICTIONARY_OVERRIDES = {"abreu": ["AH0 B R EY1 Y UW0"],
+                        "abreu's": ["AH0 B R EY1 Y UW0 Z"]}
 # Survey can go either way but I'm wagering that in article titles it will more
 # often be a noun.
 PRONUNCIATION_OVERRIDES = (("HD", "10"), ("U.S.", "10"), ("Laos", "1"),
-                           ("Our", "1"), ("DeMille", "01"), ("Survey", "10"),
-                           ("Abreu", "010"))
+                           ("Our", "1"), ("DeMille", "01"), ("Survey", "10"))
 TMNT_STRESSES = re.compile(r"1[02]1[02]1[02]1[02]")
 CAMPTOWN_STRESSES = re.compile(r"1[02]1[02]1[02]1")
 CHARS_ONLY = re.compile("[^a-zA-Z]")
